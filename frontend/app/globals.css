@@ -64,11 +64,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black;
   }
-}
-
-body{
-  background: linear-gradient(#010110, black, #010110);
-  color: white;   /*remove later*/
 }
