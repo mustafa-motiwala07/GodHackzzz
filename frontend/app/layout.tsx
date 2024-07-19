@@ -3,8 +3,8 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-import { Navbar } from "./_components/ui/Navbar";
-import { Footer } from "./_components/ui/Footer";
+import { Navbar } from "./pages/Navbar";
+import { Footer } from "./pages/Footer";
 
 const fontSans = FontSans({
   subsets: ["latin"],
