@@ -1,6 +1,12 @@
-fastapi 
-uvicorn 
-python-multipart 
-aiofiles
-
+google-generativeai
+langchain-google-genai
+langchain-community
+chromadb
+pypdf
+ipython
+pandas
+langchain
+fastapi
+uvicorn
+load-dotenv
 
