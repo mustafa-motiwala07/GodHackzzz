@@ -1,9 +1,6 @@
-python -m venv venv
+fastapi 
+uvicorn 
+python-multipart 
+aiofiles
 
-venv\Scripts\activate
 
-pip install fastapi uvicorn python-multipart
-
-uvicorn main:app --reload
-
-pip install aiofiles
