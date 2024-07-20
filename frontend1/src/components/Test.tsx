@@ -74,7 +74,7 @@ const Test = () => {
 
   return (
     <div className="h-[70vh] flex items-center justify-center gap-4 m-20 flex-col">
-      <div className="h-[100vh] w-4/5 border-2 border-neutral-700 rounded-xl relative p-8 backdrop-blur-[1px]">
+      <div className="h-[100vh] w-4/5 border-2 border-neutral-500 rounded-xl relative p-8 backdrop-blur-[1px]">
         {fileSelected ? (
           <div className="relative h-full w-full">
             {loading ? (
@@ -114,10 +114,10 @@ const Test = () => {
           className="absolute inset-0 opacity-0 cursor-pointer"
         />
       </div>
-      <div className="h-10 w-1/6 block border-2 border-neutral-700 rounded-xl flex flex-col backdrop-blur-[3px]">
+      <div className="h-10 w-1/6 block border-2 border-neutral-500 rounded-xl flex flex-col backdrop-blur-[3px]">
         <button
           onClick={handleUpload}
-          className="gradient-button basis-1/6 w-auto m-4 mt-0 font-semibold py-2 px-4 rounded-xl text-zinc-800"
+          className="gradient-button basis-1/6 w-auto m-4 mt-0 font-semibold py-2 px-4 rounded-xl text-neutral-100"
         >
           Upload
         </button>
