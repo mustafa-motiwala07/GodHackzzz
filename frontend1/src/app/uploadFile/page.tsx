@@ -2,6 +2,7 @@
 import { useState } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
+import Navbar from "@/components/Navbar";
 
 const Test = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
