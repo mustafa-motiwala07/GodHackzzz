@@ -12,7 +12,7 @@ export function Chat() {
     const sources = ["I am source one", "I am source two"];
 
     return (
-        <div className="rounded-2xl border h-[75vh] flex flex-col justify-between">
+        <div className="m-6 rounded-2xl border h-[75vh] flex flex-col justify-between">
             <div className="p-6 overflow-auto">
                 {messages.map(({id, role, content}: Message, index) => (
                     <ChatBubble 
