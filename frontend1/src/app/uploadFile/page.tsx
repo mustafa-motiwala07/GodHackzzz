@@ -169,8 +169,8 @@ const Test = () => {
           Upload
         </button>
       </div>
-      <div className="w-full flex flex-col items-center mt-4">
-        <h2 className="text-xl mb-4">Uploaded Files</h2>
+      <div className="w-[140vh] flex flex-col items-center mt-4 border-t-2">
+        <h2 className="text-xl m-4">Uploaded Files</h2>
         <div className="w-full flex flex-wrap gap-4 justify-center">
           {files.map((file, index) => (
             <div key={index} className="w-1/4 border p-4 rounded-lg">
