@@ -1,3 +1,62 @@
+import * as React from "react";
+import Balancer from "react-wrap-balancer";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThreeDots } from "react-loader-spinner";
+import { Message } from "ai/react";
+import { TextGenerateEffect } from "./ui/text-generate-effect"; // Adjust the import path if necessary
+
+const wrappedText = (text: string) => text.split("\n").map((line, i) => (
+  <span key={i}>
+    {line}
+    <br />
+  </span>
+));
+
+interface ChatBubbleProps extends Partial<Message> {
+  sources: string[];
+  isLoading?: boolean; // Optional loading prop
+}
+
+export function ChatBubble({
+  role = "assistant",
+  content,
+  sources,
+  isLoading = false, // Default to false
+}: ChatBubbleProps) {
+  return (
+    <div className="mb-2">
+      <Card className="mb-2">
+        <CardHeader>
+          <CardTitle
+            className={
+              role !== "assistant"
+                ? "text-amber-500 dark:text-amber-200"
+                : "text-blue-500 dark:text-blue-200"
+            }
+          >
+            {role === "assistant" ? "AI" : "You"}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
+            <div className="h-8">
+              <ThreeDots color="#4A90E2" height={10} width={50} />
+            </div>
+          ) : role === "assistant" ? (
+            <TextGenerateEffect words={content || ""} />
+          ) : (
+            <Balancer>{wrappedText(content || "")}</Balancer>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+
+
+
+
 // import * as React from "react";
 // import { cn } from "@/lib/utils";
 // import Balancer from "react-wrap-balancer";
@@ -70,56 +129,61 @@
 //   );
 // }
 
-import * as React from "react";
-import Balancer from "react-wrap-balancer";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ThreeDots } from "react-loader-spinner";
-import { Message } from "ai/react";
+// import * as React from "react";
+// import Balancer from "react-wrap-balancer";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { ThreeDots } from "react-loader-spinner";
+// import { Message } from "ai/react";
 
-const wrappedText = (text: string) =>
-  text.split("\n").map((line, i) => (
-    <span key={i}>
-      {line}
-      <br />
-    </span>
-  ));
+// const wrappedText = (text: string) =>
+//   text.split("\n").map((line, i) => (
+//     <span key={i}>
+//       {line}
+//       <br />
+//     </span>
+//   ));
 
-interface ChatBubbleProps extends Partial<Message> {
-  sources: string[];
-  isLoading?: boolean; // Optional loading prop
-}
+// interface ChatBubbleProps extends Partial<Message> {
+//   sources: string[];
+//   isLoading?: boolean; // Optional loading prop
+// }
 
-export function ChatBubble({
-  role = "assistant",
-  content,
-  sources,
-  isLoading = false, // Default to false
-}: ChatBubbleProps) {
-  return (
-    <div className="mb-2">
-      <Card className="mb-2">
-        <CardHeader>
-          <CardTitle
-            className={
-              role !== "assistant"
-                ? "text-amber-500 dark:text-amber-200"
-                : "text-blue-500 dark:text-blue-200"
-            }
-          >
-            {role === "assistant" ? "AI" : "You"}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          {isLoading ? (
-            <div className="h-8">
-              <ThreeDots color="#4A90E2" height={10} width={50} />
-            </div>
-          ) : (
-            <Balancer>{wrappedText(content || "")}</Balancer>
-          )}
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
+// export function ChatBubble({
+//   role = "assistant",
+//   content,
+//   sources,
+//   isLoading = false, // Default to false
+// }: ChatBubbleProps) {
+//   return (
+//     <div className="mb-2">
+//       <Card className="mb-2">
+//         <CardHeader>
+//           <CardTitle
+//             className={
+//               role !== "assistant"
+//                 ? "text-amber-500 dark:text-amber-200"
+//                 : "text-blue-500 dark:text-blue-200"
+//             }
+//           >
+//             {role === "assistant" ? "AI" : "You"}
+//           </CardTitle>
+//         </CardHeader>
+//         <CardContent>
+//           {isLoading ? (
+//             <div className="h-8">
+//               <ThreeDots color="#4A90E2" height={10} width={50} />
+//             </div>
+//           ) : (
+//             <Balancer>{wrappedText(content || "")}</Balancer>
+//           )}
+//         </CardContent>
+//       </Card>
+//     </div>
+//   );
+// }
+
+
+
+
+
 
