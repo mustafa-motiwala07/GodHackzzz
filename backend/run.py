@@ -5,9 +5,11 @@ from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 import os
 
-from model import run_query, update_db
+from model import run_query, update_db, init_db
 
 app = FastAPI()
+
+FILES_DIR = "files/"
 
 # orig_origins = [
 #     "http://localhost",  
@@ -80,8 +82,23 @@ async def upload_file(file: UploadFile = File(...)):
     return {"updated_db": file.filename}, 200 
     # return JSONResponse(content={"filename": file.filename, "location": file_location})
 
+@app.get("/getFiles/")
+async def get_files():
+    files = os.listdir(FILES_DIR)
+    return {"files": files}
+
+@app.delete("/deletefile/{filename}")
+async def delete_file(filename: str):
+    file_location = f"{FILES_DIR}{filename}"
+    if os.path.exists(file_location):
+        os.remove(file_location)
+        return {"message": "File deleted"}
+    else:
+        raise HTTPException(status_code=404, detail="File not found")
 
 if __name__ == "__main__":
+    init_db()
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
+    
 
