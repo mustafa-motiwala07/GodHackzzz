@@ -9,4 +9,7 @@ langchain
 fastapi
 uvicorn
 load-dotenv
-
+unstructured
+python-magic
+python-pptx
+docx2txt

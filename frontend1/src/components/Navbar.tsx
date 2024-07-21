@@ -9,7 +9,7 @@ export default function Navbar() {
         </Link>
         <div className="flex items-center space-x-4">
           <Link href="/uploadFile" className="text-sm font-medium transition-colors hover:text-primary" prefetch={false}>
-            Manage PDF
+            Manage Files
           </Link>
         </div>
       </nav>

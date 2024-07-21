@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 import os
 
-from model import run_query, update_db, init_db
+from model import run_query, update_db
 
 app = FastAPI()
 
@@ -61,7 +61,7 @@ def run_query_endpoint(request: QueryRequest):
         raise HTTPException(status_code=500, detail=str(e))
     
 def allowed_file(filename):
-    ALLOWED_EXTENSIONS = {'pdf', 'docx', 'ppt'}
+    ALLOWED_EXTENSIONS = {'pdf', 'docx', 'pptx'}
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -78,7 +78,7 @@ async def upload_file(file: UploadFile = File(...)):
     with open(file_location, "wb+") as file_object:
         file_object.write(file.file.read())
     
-    update_db(file_location)
+    update_db()
     return {"updated_db": file.filename}, 200 
     # return JSONResponse(content={"filename": file.filename, "location": file_location})
 
@@ -97,7 +97,6 @@ async def delete_file(filename: str):
         raise HTTPException(status_code=404, detail="File not found")
 
 if __name__ == "__main__":
-    init_db()
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
     
