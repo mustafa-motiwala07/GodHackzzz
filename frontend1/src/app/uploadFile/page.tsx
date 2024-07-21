@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { AiFillFilePdf, AiFillFilePpt, AiFillFileWord } from "react-icons/ai";
 import HashLoader from "react-spinners/HashLoader";
 import Navbar from "@/components/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const Test = () => {
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [fileSelected, setFileSelected] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [filename, setFilename] = useState<string>("");
@@ -46,16 +46,8 @@ const Test = () => {
     }
 
     setFilename(file.name);
-
-    const reader = new FileReader();
-    reader.onload = (e: ProgressEvent<FileReader>) => {
-      if (typeof reader.result === "string") {
-        setPreviewUrl(reader.result);
-        setFileSelected(true);
-        setSelectedFile(file);
-      }
-    };
-    reader.readAsDataURL(file);
+    setFileSelected(true);
+    setSelectedFile(file);
   };
 
   const handleUpload = async () => {
@@ -117,6 +109,20 @@ const Test = () => {
     }
   };
 
+  const getFileIcon = (fileType: string) => {
+    switch (fileType) {
+      case "application/pdf":
+        return <AiFillFilePdf className="text-red-500" size={50} />;
+      case "application/vnd.ms-powerpoint":
+      case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+        return <AiFillFilePpt className="text-orange-500" size={50} />;
+      case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        return <AiFillFileWord className="text-blue-500" size={50} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="h-[90vh] flex flex-col items-center justify-center gap-4 m-20 overflow-y-auto">
       <ToastContainer />
@@ -126,22 +132,15 @@ const Test = () => {
             {loading ? (
               <div className="absolute inset-0 flex items-center justify-center z-20">
                 <HashLoader color="#ffffff" className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                <div className="bg-black opacity-[0.5] h-full w-full flex items-center">
-                  <iframe
-                    src={previewUrl || ""}
-                    className="opacity-50 mx-auto"
-                    width="100%"
-                    height="100%"
-                  ></iframe>
+                <div className="bg-black opacity-[0.5] h-full w-full flex items-center justify-center">
+                  {getFileIcon(selectedFile?.type || "")}
                 </div>
               </div>
             ) : (
-              <iframe
-                src={previewUrl || ""}
-                className="w-full h-full"
-                width="100%"
-                height="100%"
-              ></iframe>
+              <div className="flex flex-col items-center justify-center">
+                {getFileIcon(selectedFile?.type || "")}
+                <p className="mt-4">{filename}</p>
+              </div>
             )}
           </div>
         ) : (
@@ -172,8 +171,9 @@ const Test = () => {
         <h2 className="text-xl mb-4">Uploaded Files</h2>
         <div className="w-full flex flex-wrap gap-4 justify-center">
           {files.map((file, index) => (
-            <div key={index} className="w-1/4 border p-4 rounded-lg">
-              <p className="truncate">{file}</p>
+            <div key={index} className="w-1/4 border p-4 rounded-lg flex flex-col items-center">
+              {getFileIcon(file.split('.').pop() || "")}
+              <p className="mt-2 truncate">{file}</p>
               <button
                 onClick={() => handleDelete(file)}
                 className="mt-2 bg-red-500 text-white py-1 px-2 rounded"
