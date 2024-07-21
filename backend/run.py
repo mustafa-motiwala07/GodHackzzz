@@ -1,3 +1,4 @@
+from http.client import HTTPException
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -41,11 +42,22 @@ def test_endpoint(name: str):
 #     update_db(f"./files/{name}")
 #     return {"updated_db": name}, 200
 
-@app.post("/run_query/")
-def run_query_endpoint(query: str):
-    result = run_query(query)
-    return result, 200
+# @app.post("/run_query/")
+# def run_query_endpoint(query: str):
+#     result = run_query(query)
+#     return result, 200
 
+class QueryRequest(BaseModel):
+    query: str
+    
+@app.post("/run_query/")
+def run_query_endpoint(request: QueryRequest):
+    try:
+        result = run_query(request.query)
+        return {"response": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'pdf', 'docx', 'ppt'}
     return '.' in filename and \
