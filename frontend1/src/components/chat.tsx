@@ -69,8 +69,8 @@
 //   );
 // }
 
-"use client"
-import { useRef, useState } from "react";
+"use client";
+import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { ChatBubble } from "./chat-bubble"; // Import your ChatBubble component
 import { Input } from "@/components/ui/input";
@@ -83,7 +83,16 @@ export function Chat() {
     { role: "assistant", content: "Hey I am your AI", id: "2" },
   ]);
   const [loading, setLoading] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null); // Reference to the input field
+  const inputRef = useRef<HTMLInputElement>(null); // Reference to the input field
+  const messagesEndRef = useRef<HTMLDivElement>(null); // Reference to the end of the messages container
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -94,9 +103,9 @@ export function Chat() {
       const userMessageObject: Message = { role: "user", content: userMessage, id: `${messages.length + 1}` };
       const loadingMessageObject: Message = { role: "assistant", content: "", id: `${messages.length + 2}` };
 
-    if (inputRef.current) {
-      inputRef.current.value = ""; // Clear the input field
-    }
+      if (inputRef.current) {
+        inputRef.current.value = ""; // Clear the input field
+      }
 
       setMessages([...messages, userMessageObject, loadingMessageObject]);
       setLoading(true); // Start loading
@@ -108,8 +117,8 @@ export function Chat() {
         const aiMessage = response.data.response.result;
 
         // Update the loading message with the AI response
-        setMessages(prevMessages =>
-          prevMessages.map(message =>
+        setMessages((prevMessages) =>
+          prevMessages.map((message) =>
             message.id === loadingMessageObject.id
               ? { ...message, content: aiMessage }
               : message
@@ -125,7 +134,7 @@ export function Chat() {
 
   return (
     <div className="m-20 rounded-2xl border h-[75vh] flex flex-col justify-between">
-      <div className="p-6 overflow-auto">
+      <div className="p-6 overflow-auto m-2">
         {messages.map(({ id, role, content }: Message) => (
           <ChatBubble
             key={id}
@@ -135,10 +144,15 @@ export function Chat() {
             isLoading={role === "assistant" && loading && !content} // Pass loading state
           />
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
       <form className="p-4 flex clear-both" onSubmit={handleFormSubmit}>
-      <Input placeholder={"Type to chat with AI..."} className="mr-2" ref={inputRef} />
+        <Input
+          placeholder={"Type to chat with AI..."}
+          className="mr-2"
+          ref={inputRef}
+        />
         <Button type="submit" className="w-24">
           Ask
         </Button>
@@ -146,4 +160,3 @@ export function Chat() {
     </div>
   );
 }
-

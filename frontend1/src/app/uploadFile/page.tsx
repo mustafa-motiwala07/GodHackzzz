@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import HashLoader from "react-spinners/HashLoader";
 import Navbar from "@/components/Navbar";
-import { ToastContainer, toast, ToastOptions } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
 
 const Test = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -119,11 +118,11 @@ const Test = () => {
   };
 
   return (
-    <div className="h-[70vh] flex items-center justify-center gap-4 m-20 flex-col">
+    <div className="h-[90vh] flex flex-col items-center justify-center gap-4 m-20 overflow-y-auto">
       <ToastContainer />
-      <div className="h-[100vh] w-4/5 border-2 border-neutral-500 rounded-xl relative p-8 backdrop-blur-[1px]">
+      <div className="h-[70vh] w-4/5 border rounded-xl p-8 backdrop-blur-[1px] flex flex-col justify-between">
         {fileSelected ? (
-          <div className="relative h-full w-full">
+          <div className="relative h-full w-full flex flex-col justify-center items-center">
             {loading ? (
               <div className="absolute inset-0 flex items-center justify-center z-20">
                 <HashLoader color="#ffffff" className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
@@ -161,16 +160,16 @@ const Test = () => {
           className="absolute inset-0 opacity-0 cursor-pointer"
         />
       </div>
-      <div className="h-10 w-1/6 block border-2 border-neutral-500 rounded-xl flex flex-col backdrop-blur-[3px]">
+      <div className="w-1/6">
         <button
           onClick={handleUpload}
-          className="gradient-button basis-1/6 w-auto m-4 mt-0 font-semibold py-2 px-4 rounded-xl text-neutral-100"
+          className="w-full gradient-button py-2 px-4 text-neutral-100 border-2 rounded-xl"
         >
           Upload
         </button>
       </div>
-      <div className="w-[140vh] flex flex-col items-center mt-4 border-t-2">
-        <h2 className="text-xl m-4">Uploaded Files</h2>
+      <div className="w-full flex flex-col items-center mt-4 border-t-2 pt-4">
+        <h2 className="text-xl mb-4">Uploaded Files</h2>
         <div className="w-full flex flex-wrap gap-4 justify-center">
           {files.map((file, index) => (
             <div key={index} className="w-1/4 border p-4 rounded-lg">

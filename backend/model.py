@@ -43,7 +43,7 @@ def update_db(doc_path):
     pages = pdf_loader.load_and_split()
     context = "\n\n".join(str(page.page_content) for page in pages)
     
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=1000)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=5000, chunk_overlap=800)
     texts = text_splitter.split_text(context)
     
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001",google_api_key=GOOGLE_API_KEY)
@@ -60,7 +60,8 @@ def run_query(query):
     
     template = """ 
     You are a helpful interactive chatbot. 
-    Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer. Keep the answer as concise as possible. Always say "thanks for asking!" at the end of the answer.
+    If it is a casual conversation, respond accordingly.
+    Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.  
     {context}
     Question: {question}
     Helpful Answer:"""

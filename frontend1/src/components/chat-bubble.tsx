@@ -111,7 +111,7 @@ export function ChatBubble({
         </CardHeader>
         <CardContent>
           {isLoading ? (
-            <div className="flex items-center justify-center h-16">
+            <div className="h-8">
               <ThreeDots color="#4A90E2" height={10} width={50} />
             </div>
           ) : (
